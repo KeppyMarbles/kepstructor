@@ -1,6 +1,7 @@
 # kepstructor
 My plugins for Torque Constructor
 
+**Note**: If you update a plugin, do delete the associated `.dso` file before re-opening Constructor.
 
 ## AutoDIF
 
