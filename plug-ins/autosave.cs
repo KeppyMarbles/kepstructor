@@ -44,15 +44,13 @@ package AutoSave {
     switch(%id) {
       case 0:
         $pref::Autosave::Enabled = %value;
+        updateSaveSession();
       case 1:
         $pref::Autosave::Interval = %value;
         scene.autoSave();
       case 2:
         $pref::Autosave::SaveSession = %value;
-        if(%value)
-          activatePackage(SaveSession);
-        else
-          deactivatePackage(SaveSession);
+        updateSaveSession();
     }
   }
 };
@@ -68,6 +66,12 @@ function startAutosave() {
 function backupScene(%sceneFile) {
   echo("AutoSave: backing up scene" SPC %sceneFile);
   pathCopy(%sceneFile, $constructorPath @ "/autosave/" @ fileBase(%sceneFile) @ ".csx.old", false);
+}
+
+function updateSaveSession() {
+  deactivatePackage(SaveSession);
+  if($pref::Autosave::Enabled && $pref::Autosave::SaveSession)
+    activatePackage(SaveSession);
 }
 
 function CSceneManager::autoSave(%this, %currentOnly) {
@@ -151,6 +155,7 @@ function CSceneManager::saveSession(%this) {
   }
   $pref::Autosave::lastOpenedSceneCount = %this.getCount();
   
+  // Add all opened scenes to prefs
   for (%i = 0; %i < %this.getCount(); %i++) {
     %scene = %this.getObject(%i);
     %sceneFile = %scene.getFileName();
@@ -165,11 +170,12 @@ function CSceneManager::loadPreviousSession(%this) {
   if($prevSessionLoaded)
     return;
   $prevSessionLoaded = true;
+  
+  // Opened saved scenes
   for(%i = 0; %i < $pref::Autosave::lastOpenedSceneCount; %i++) {
     %sceneFile = $pref::Autosave::lastOpenedScenes[%i];
-    if(%sceneFile !$= "") {
+    if(%sceneFile !$= "")
       %this.load(0, %sceneFile);
-    }
   }
   if($pref::Autosave::lastOpenedSceneCount > 1) {
     // Close default scene
@@ -226,7 +232,7 @@ package SaveSession {
     }
   }
   
-  // Edit: Keep the explicitly saved file safe, in case autosave overwrites something important.
+  // Edit: Update the .old file
   function CSceneManager::save(%this) {
     Parent::save(%this);
     backupScene(%this.getCurrent().getFileName());
@@ -253,8 +259,7 @@ if($pref::Autosave::Interval $= "")
 if($pref::Autosave::SaveSession $= "")
   $pref::Autosave::SaveSession = true;
 
-if($pref::Autosave::SaveSession)
-  activatePackage(SaveSession);
+updateSaveSession();
 
 // Start
 activatePackage(ImproveSave);
