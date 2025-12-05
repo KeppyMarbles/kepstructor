@@ -217,8 +217,8 @@ function MBConnectionClient::export_difs(%this) {
     %this.sendCommand("notifyError", "Worldspawn is empty");
     return;
   }
-  if(scene.getCurrentFile() $= scene.getCurrentName()) {
-    %this.sendCommand("notifyError", "Scene needs to be saved to a file");
+  if(strstr(scene.getCurrentFile(), ".csx") == -1) {
+    %this.sendCommand("notifyError", "Scene needs to be saved to a CSX file");
     return;
   }
   

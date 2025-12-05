@@ -65,7 +65,7 @@ function startAutosave() {
 
 function backupScene(%sceneFile) {
   echo("AutoSave: backing up scene" SPC %sceneFile);
-  pathCopy(%sceneFile, $constructorPath @ "/autosave/" @ fileBase(%sceneFile) @ ".csx.old", false);
+  pathCopy(%sceneFile, $constructorPath @ "/autosave/" @ fileName(%sceneFile) @ ".old", false);
 }
 
 function updateSaveSession() {
@@ -141,7 +141,12 @@ function CSceneManager::saveScenes(%this, %currentOnly) {
     
     // Perform the save
     activatePackage(BeforeAutoSave);
-    %scene.save(%path);
+    
+    if(strstr(%sceneFile, ".map") != -1)
+      %scene.getDetailLevelMap(0).exportMap(%path);
+    else
+      %scene.save(%path);
+    
     deactivatePackage(BeforeAutoSave);
     
     %saved = true;
@@ -208,9 +213,7 @@ package SaveSession {
     tool.finish();
     %scene = %this.getCurrent();
     if (%scene != -1)
-    {
       %this.__closeStage2(%scene);
-    }
   }
   
   // Edit: autosave all then close everything without prompting
