@@ -130,11 +130,6 @@ function CSceneManager::saveScenes(%this, %currentOnly) {
     }
     // Or already saved scene
     else {
-      // Make sure we saved the .old file
-      if(!$Autosave::didBackup[%sceneName]) {
-        backupScene(%sceneFile);
-        $Autosave::didBackup[%sceneName] = true;
-      }
       %path = %sceneFile;
     }
     echo("AutoSave: saving" SPC %path);

@@ -23,7 +23,7 @@ Saves scenes automatically after a set period of time
 - Interval (Plugin Pref): Number of seconds to wait between saves
 - Save Session (Plugin Pref): If scenes should be saved when closing Constructor and re-opened when opening Constructor
 
-Unsaved scenes and backup files are stored in `Constructor/autosave`. Backups happen when the scene is opened or saved manually.
+Unsaved scenes and backup files are stored in `Constructor/autosave`. Backups happen when the scene is saved manually.
 ## MP Entity Assist
 
 Re-orders entity IDs of selection to create a valid Moving Platform
