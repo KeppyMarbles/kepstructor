@@ -192,6 +192,18 @@ package ImproveSave {
   function InteriorMap::getBrushScale(%brushID) {
     return; // Stop spamming the console
   }
+  function CSceneManager::load(%this, %callback, %filename, %noFileCheck)
+  {
+    if($pref::Autosave::Enabled) {
+      for(%i = 0; %i < %this.getCount(); %i++) {
+        if(%filename $= %this.getObject(%i).getName()) {
+          MessageBoxOK("Error", "Can't load" SPC %filename SPC "while it's already open, as this could cause issues with Autosave.");
+          return;
+        }
+      }
+    }
+    Parent::load(%this, %callback, %filename, %noFileCheck);
+  }
 };
 
 package BeforeAutoSave {
