@@ -32,3 +32,4 @@ Re-orders entity IDs of selection to create a valid Moving Platform
 ## Hot Reload Plugins
 
 Optional; for development purposes. Re-execs plugin scripts when they change
+- Activation: Check "Enabled" in the plugin dialog
