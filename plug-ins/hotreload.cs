@@ -99,7 +99,7 @@ tool.setToolProperty("HotReload", "Icon", "standardicons/default");
 tool.setToolProperty("HotReload", "Group", "Keppy's Plugins (Dev)");
 
 // Start
-toggleHotReload();
+schedule(1000, 0, toggleHotReload);
 
 //
 $constructorPath = filePath(strreplace($Game::argv[0], "\\", "/"));

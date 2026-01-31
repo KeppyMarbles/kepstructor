@@ -274,5 +274,5 @@ updateSaveSession();
 activatePackage(ImproveSave);
 startAutosave();
 
-if($pref::Autosave::SaveSession)
+if($pref::Autosave::Enabled && $pref::Autosave::SaveSession)
   scene.schedule(1000, "loadPreviousSession");
