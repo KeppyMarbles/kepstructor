@@ -45,50 +45,50 @@ package HotReload {
 // ---------------- Hot Reload ----------------
 
 function toggleHotReload() {
-	if($pref::HotReload::Enabled) {
-		%patterns = "*.cs;*.gui";
-		%i = 0;
+  if($pref::HotReload::Enabled) {
+    %patterns = "*.cs;*.gui";
+    %i = 0;
     %exp = "*/plug-ins/*.cs";
-		for(%file = findFirstFile(%exp); %file !$= ""; %file = findNextFile(%exp)) {
-			$Con::HotReload::file[%i] = %file;
-			%i++;
-		}
-		$Con::HotReload::fileCount = %i;
-		echo("Watching" SPC %i SPC "files");
-		hotReloadLoop();
-	}
+    for(%file = findFirstFile(%exp); %file !$= ""; %file = findNextFile(%exp)) {
+      $Con::HotReload::file[%i] = %file;
+      %i++;
+    }
+    $Con::HotReload::fileCount = %i;
+    echo("Watching" SPC %i SPC "files");
+    hotReloadLoop();
+  }
 }
 
 function hotReloadLoop() {
-	if(!$pref::HotReload::Enabled) {
+  if(!$pref::HotReload::Enabled) {
     echo("Stopped file watcher");
     return;
   }
-	
-	%changedFilesList = "";
-	for(%i = 0; %i < $Con::HotReload::fileCount; %i++) {
-		%file = $Con::HotReload::file[%i];
-		%currentMod = getFileCRC(%file);
-		if($Con::HotReload::LastMod[%file] !$= "" && $Con::HotReload::LastMod[%file] !$= %currentMod)
-			%changedFilesList = %changedFilesList TAB %file;
-		$Con::HotReload::LastMod[%file] = %currentMod;
-	}
-	
-	%count = getFieldCount(%changedFilesList);
-	for(%i = 1; %i < %count; %i++) {
-		%fileToReload = getField(%changedFilesList, %i);
-		echo("File changed:" SPC %fileToReload);
+  
+  %changedFilesList = "";
+  for(%i = 0; %i < $Con::HotReload::fileCount; %i++) {
+    %file = $Con::HotReload::file[%i];
+    %currentMod = getFileCRC(%file);
+    if($Con::HotReload::LastMod[%file] !$= "" && $Con::HotReload::LastMod[%file] !$= %currentMod)
+      %changedFilesList = %changedFilesList TAB %file;
+    $Con::HotReload::LastMod[%file] = %currentMod;
+  }
+  
+  %count = getFieldCount(%changedFilesList);
+  for(%i = 1; %i < %count; %i++) {
+    %fileToReload = getField(%changedFilesList, %i);
+    echo("File changed:" SPC %fileToReload);
     fileDelete($constructorPath @ "/" @ %fileToReload @ ".dso");
-		exec(%fileToReload);
-	}
-	
-	if($ScriptError !$= "") {
-		MessageBoxOk("Script Error", $ScriptError);
-		$ScriptError = "";
-	}
-	
-	cancel($Con::HotReload::Schedule);
-	$Con::HotReload::Schedule = schedule(500, 0, hotReloadLoop);
+    exec(%fileToReload);
+  }
+  
+  if($ScriptError !$= "") {
+    MessageBoxOk("Script Error", $ScriptError);
+    $ScriptError = "";
+  }
+  
+  cancel($Con::HotReload::Schedule);
+  $Con::HotReload::Schedule = schedule(500, 0, hotReloadLoop);
 }
 
 // ---------------- Initialization ----------------
