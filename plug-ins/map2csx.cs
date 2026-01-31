@@ -17,18 +17,22 @@ package map2csx {
 
     %inst.instance = %plugin;
     %inst.flagsInterface = tool.IFLAG_NOTOOLCURSOR();
-    
+
+    return tool.FUNC_OK();
+  }
+  
+  function Plugin::Execute(%this, %inst) {
     %exp = "constructor/map2csx/*.map";
     %convertCount = 0;
     for(%file = findFirstFile(%exp); %file !$= ""; %file = findNextFile(%exp)) {
-      echo("Converting" SPC %file);
-      scene.convertToMap(%file);
-      %convertCount++;
+      if(!%converted[%file]) { // Cause files are being found more than once for some reason?
+        echo("Converting" SPC %file);
+        scene.convertToMap(%file);
+        %convertCount++;
+      }
+      %converted[%file] = true;
     }
-    
     MessageBoxOK("Done", "Converted" SPC %convertCount SPC "files to .csx");
-
-    return tool.FUNC_OK(); 
   }
 };
 
@@ -39,7 +43,6 @@ function CSceneManager::convertToMap(%this, %file) {
   %scene.save(%csxfile);
   %this.__closeStage2(%scene);
 }
-
 
 // ---------------- Initialization ----------------
 
