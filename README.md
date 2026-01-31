@@ -29,7 +29,12 @@ Unsaved scenes and backup files are stored in `Constructor/autosave`. Backups ha
 Re-orders entity IDs of selection to create a valid Moving Platform
 - Activation: Select desired MP parts (Door_Elevator, markers, triggers), then click the icon
 
+## map2csx
+
+Converts all .map files in `Constructor/constructor/map2csx` to .csx
+- Activation: Create the folder and add .map files to it. (Re)start Constructor and click the icon
+
 ## Hot Reload Plugins
 
-Optional; for development purposes. Re-execs plugin scripts when they change
+For development purposes. Re-execs plugin scripts when they change
 - Activation: Check "Enabled" in the plugin dialog
