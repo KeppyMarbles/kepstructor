@@ -107,11 +107,3 @@ tool.register("MPFix", tool.typeGeneric(), tool.RFLAG_NONE(), "MP Entity Assist"
 
 tool.setToolProperty("MPFix", "Icon", "mpfix");
 tool.setToolProperty("MPFix", "Group", "Keppy's Plugins");
-
-//
-$constructorPath = filePath(strreplace($Game::argv[0], "\\", "/"));
-
-function MPFix::re() {
-  fileDelete($constructorPath @ "/" @ $Con::File @ ".dso");
-	exec($Con::File);
-}

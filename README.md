@@ -28,3 +28,7 @@ Unsaved scenes and backup files are stored in `Constructor/autosave`. Backups ha
 
 Re-orders entity IDs of selection to create a valid Moving Platform
 - Activation: Select desired MP parts (Door_Elevator, markers, triggers), then click the icon
+
+## Hot Reload Plugins
+
+Optional; for development purposes. Re-execs plugin scripts when they change

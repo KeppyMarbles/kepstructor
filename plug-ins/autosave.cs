@@ -192,8 +192,7 @@ package ImproveSave {
   function InteriorMap::getBrushScale(%brushID) {
     return; // Stop spamming the console
   }
-  function CSceneManager::load(%this, %callback, %filename, %noFileCheck)
-  {
+  function CSceneManager::load(%this, %callback, %filename, %noFileCheck) {
     if($pref::Autosave::Enabled) {
       for(%i = 0; %i < %this.getCount(); %i++) {
         if(%filename $= %this.getObject(%i).getName()) {
@@ -277,11 +276,3 @@ startAutosave();
 
 if($pref::Autosave::SaveSession)
   scene.schedule(1000, "loadPreviousSession");
-
-//
-$constructorPath = filePath(strreplace($Game::argv[0], "\\", "/"));
-
-function AutoSave::re() {
-  fileDelete($constructorPath @ "/" @ $Con::File @ ".dso");
-	exec($Con::File);
-}

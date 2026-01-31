@@ -340,11 +340,3 @@ if(isObject(MBConnection)) {
 new TCPObject(MBConnection);
 
 MBConnection.listen(7653);
-
-//
-$constructorPath = filePath(strreplace($Game::argv[0], "\\", "/"));
-
-function AutoDIF::re() {
-  fileDelete($constructorPath @ "/" @ $Con::File @ ".dso");
-	exec($Con::File);
-}
