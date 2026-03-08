@@ -99,9 +99,24 @@ package stopSpamming {
   }
 };
 
+package noChildfreeElevators {
+  function CSceneManager::save(%this) {
+    %map = scene.getCurrentMap();
+    for(%i = 0; %i < %map.getNumEntities(); %i++) {
+      %entityID = %map.getEntityID(%i);
+      if(%map.getEntityClassname(%entityID) $= "Door_Elevator" && %map.getNumEntityChildren(%entityID) == 0) {
+        %map.deleteEntity(%entityID);
+        echo("Deleted brushless elevator" SPC %entityID);
+      }
+    }
+    Parent::save(%this);
+  }
+};
+
 // ---------------- Initialization ----------------
 
 activatePackage(stopSpamming);
+activatePackage(noChildfreeElevators);
 
 tool.register("MPFix", tool.typeGeneric(), tool.RFLAG_NONE(), "MP Entity Assist" );
 
