@@ -131,6 +131,8 @@ function CSceneManager::saveScenes(%this, %currentOnly) {
     // Or already saved scene
     else {
       %path = %sceneFile;
+      if(!PlatformIsFile(%path))
+        continue;
     }
     echo("AutoSave: saving" SPC %path);
     
