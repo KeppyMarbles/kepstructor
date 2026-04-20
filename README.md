@@ -9,7 +9,7 @@ Allows connection with PQ for automatic DIF conversion
 
 - Activation: automatic
 - Interior Folder (Scene Property): determines the interiors folder to place the DIF
-  - Add or remove options via `Constructor/prefs.cs` -> `$pref::AutoDIF::folders<Number>`
+  - Add or remove options via `Constructor/constructor/prefs.cs` -> `$pref::AutoDIF::folders<Number>`
 - Export On Save (Plugin Pref): If the scene should be exported to PQ when hitting ctrl s
 - Save On Connect (Plugin Pref): If the scene should be saved upon hitting "Connect Constructor" in PQ. Ensures DIF is up to date
 - Build BSP (Plugin Pref): If BSP Tree should be built for raycasts (may slow or stall export)
